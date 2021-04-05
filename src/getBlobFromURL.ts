@@ -18,7 +18,7 @@ function isFont(filename: string) {
 }
 
 export function getBlobFromURL(
-  url: string,
+  url: any,
   options: Options,
 ): Promise<{ blob: string; contentType: string } | null> {
   let href = url.replace(/\?.*/, '')
@@ -58,22 +58,20 @@ export function getBlobFromURL(
 
     return placeholder
   }
-  let header = {};
-  if (url.indexOf('statics.cdn') >= 0) {
-    /* header = { method: 'GET', headers: {
-    }}; */
-    header = new Request(url, {
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: {
-      }
-    })
 
+  if (url.indexOf('statics.cdn') >= 0) {
+    url = new Request(url, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: {
+        }
+    })
   }
+
   const deferred = window.fetch
     ? window
-      .fetch(url, header)
+      .fetch(url)
       .then((response) => {
         return new Promise((res, rej) => {
           response.blob().then((blob) => {
