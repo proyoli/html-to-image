@@ -59,7 +59,7 @@ export function getBlobFromURL(
     return placeholder
   }
 
-  if (url.indexOf('statics.cdn') >= 0) {
+  if (url.indexOf('workspace.dev.cdn.funapix.club') >= 0) {
     url = new Request(url, {
         method: 'GET',
         mode: 'cors',
